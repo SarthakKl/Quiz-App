@@ -1,0 +1,101 @@
+CONCEPTS
+
+1) We have to modify the manifest file for our first activity.
+   In the <activity name="MainActivity" ></activity>
+
+   We have to add-
+	a) android:windowSoftInputMode="adjustResize"  // This will resize the view on the screen when keyboard is open for taking input
+	b) android:theme="@style/NoActionBar"	
+
+	     We have to define a new style named NoActionBar in the themes.xml in res directory.
+             <style name="NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+	        //all the colors are set to that are in the default one.
+             </style>
+
+	c) android:screeOrientation="portrait"
+
+2) We have to use a cardview to our starting activity.
+     <androidx.cardview.widget.CardView
+`	android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp"  //Determine the size and softness of the shadow so as to 					
+			//realistically depict the depth
+        app:cardCornerRadius="10dp"  //This determines how curve should be the corner of the card
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardMaxElevation="12dp"    
+        app:cardPreventCornerOverlap="true"
+     >
+	
+	//Add views inside the card using LinearLayout or any other layout method.
+	
+     </androidx.cardview.widget.CardView>
+
+3) To add a Outlined box where user have to input their details we have to add-
+   Example-
+	<com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name"
+                    android:textColorHint="#7A8089"
+                    android:textColor="#363a43"
+                    />
+
+       </com.google.android.material.textfield.TextInputLayout>
+
+4)    tv.setTextColor(Color.parseColor("#FF000000"))           // tv=> textView 
+        tv.typeface= Typeface.DEFAULT_BOLD
+        tv.background=ContextCompat.getDrawable(this,
+            R.drawable.selected_option_view
+        )
+     
+       These are some methods we can use to change the textColor, typeface(bold,italic,default) and the background of a view in the kotlin code.
+
+5)             val ques=Intent(this,QuizQuestions::class.java)
+                ques.putExtra(Constants.UserName,name.text.toString())
+                startActivity(ques)
+                finish()
+
+     Here ques in an instance of Intent class. Intent is used to go to another activity. Here we have to go to another activity named QuizQuestions.
+     We can also put some extra information using putExtra(key:String, value:Any). We can get the extra information in the QuizQuestions activity using  
+     suitable method. If the extra information is string we can use getStringExtra(key). 
+
+    We can also send back data from QuizQuestions activity to MainActivity but for this we have to use registerForActivityResult() in the MainActivity class.
+	
+         class MainActivity : AppCompatActivity() {
+
+	val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+    	{ result: ActivityResult ->
+       		 if (result.resultCode == Activity.RESULT_OK) {
+            			//  you will get result here in result.data
+			//we can store the result in any variable using result.data
+           		}
+   	}
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+        	super.onCreate(savedInstanceState)
+        	setContentView(R.layout.activity_main)
+
+        	val start=findViewById<Button>(R.id.start)
+        	val name=findViewById<EditText>(R.id.name)
+
+        	start.setOnClickListener {
+            	if(name.text.isEmpty())
+                		Toast.makeText(this, ":Please enter your name", Toast.LENGTH_SHORT).show()
+           	 else{
+               		 val ques=Intent(this,QuizQuestions::class.java)
+                		startForResult.launch(ques)
+                		finish()
+                          }
+       	}
+       }
+    
+
+
+       
