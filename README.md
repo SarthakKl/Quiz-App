@@ -12,5 +12,8 @@ This is a simple quiz app where you have to answer 10 questions. You will get 1 
 
 #Screenshots
 
+![alt text](https://github.com/SarthakKl/Quiz-App/blob/master/app/screenshot1.jpeg)
+![alt text](https://github.com/SarthakKl/Quiz-App/blob/master/app/screenshot2.jpeg)
+![alt text](https://github.com/SarthakKl/Quiz-App/blob/master/app/screenshot3.jpeg)
 
 
